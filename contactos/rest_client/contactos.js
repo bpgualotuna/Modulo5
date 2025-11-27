@@ -15,3 +15,24 @@ export const getAllContacts=(fnRefreshList)=>{
         }
     )
 }
+
+export const saveContactRest=(contact,fnShowMessage)=>{
+    const config={
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            nombre:contact.name,
+            apellido:contact.surName,
+            telefono:contact.phoneNumber
+        })
+    }
+    fetch(
+        "http://192.168.0.110:3001/contactos",config
+    ).then((response)=>{return response.json()})
+    .then((body)=>{
+        fnShowMessage();
+        console.log("Contacto guardado ", body);
+    });
+}
