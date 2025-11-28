@@ -38,7 +38,7 @@ app.put("/contactos/:idParam",(req,resp)=>{
 app.delete("/contactos/:id",(req,resp)=>{
     const id = req.params.id;
     console.log("id a eliminar: ", id);
-    resp.send("delete contactos");
+    resp.send({id:id});
 });
 
 app.listen(puerto, ()=>{

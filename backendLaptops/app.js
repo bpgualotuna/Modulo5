@@ -51,7 +51,7 @@ app.put("/laptop/:idParam", (request, response) => {
 app.delete("/laptop/:id", (request, response) => {
     const id = request.params.id;
     console.log("id recibido para eliminar:", id);
-    response.send();
+    response.send({id:id});
 });
 
 app.listen(puerto, () => {
