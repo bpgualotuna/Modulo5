@@ -36,3 +36,25 @@ export const saveContactRest=(contact,fnShowMessage)=>{
         console.log("Contacto guardado ", body);
     });
 }
+
+export const updateContactRest=(contact,fnShowMessage)=>{
+    const config={
+        method:"PUT",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            id:contact.id,
+            nombre:contact.name,
+            apellido:contact.surName,
+            telefono:contact.phoneNumber
+        })
+    }
+    fetch(
+        "http://192.168.0.110:3001/contactos/"+contact.id,config
+    ).then((response)=>{return response.json()})
+    .then((body)=>{
+        fnShowMessage();
+        console.log("Contacto guardado ", body);
+    });
+}

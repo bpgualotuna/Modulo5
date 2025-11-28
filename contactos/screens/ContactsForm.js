@@ -1,20 +1,31 @@
 import { View, Text, StyleSheet, Alert } from "react-native";
 import { Input, Button } from "@rneui/base";
 import { useState } from "react";
-import { saveContactRest } from "../rest_client/contactos";
+import { saveContactRest, updateContactRest } from "../rest_client/contactos";
 
-export const ContactsForm = ({navigation}) => {
-    const [name, setName] = useState();
-    const [surName, setSurName] = useState();
-    const [phoneNumber, setPhoneNumber] = useState();
+export const ContactsForm = ({ navigation, route }) => {
+    let contactRetrived = route.params.contactParam;
+    let isNew = true;
 
-    const showMessage = () =>{
-        Alert.alert("Confirmacion","Contacto guardado con exito");
+    if (contactRetrived != undefined) {
+        isNew = false;
     }
 
-    const saveContact = () => {
-        console.log("Guardando contacto...")
+
+    const [name, setName] = useState(isNew ? null : contactRetrived.nombre);
+    const [surName, setSurName] = useState(isNew ? null : contactRetrived.apellido);
+    const [phoneNumber, setPhoneNumber] = useState(isNew ? null : contactRetrived.telefono);
+
+
+
+    const showMessage = () => {
+        Alert.alert("Confirmacion", isNew ? "Contacto creado con exito" : "Contacto actualizado con exito");
         navigation.goBack();
+    }
+
+    const createContact = () => {
+        console.log("Guardando contacto...")
+
         saveContactRest(
             {
                 name: name,
@@ -23,6 +34,18 @@ export const ContactsForm = ({navigation}) => {
             },
             showMessage
         )
+    }
+
+    const updateContact = () => {
+        console.log("Actualizando contacto...")
+        updateContactRest({
+            id: contactRetrived.id,
+            name: name,
+            surName: surName,
+            phoneNumber: phoneNumber
+        },
+
+            showMessage)
     }
 
 
@@ -51,7 +74,7 @@ export const ContactsForm = ({navigation}) => {
         />
         <Button
             title="Guardar"
-            onPress={saveContact}
+            onPress={isNew ? createContact : updateContact}
         />
     </View>
 }

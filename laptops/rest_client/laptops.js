@@ -36,3 +36,26 @@ export const saveLaptopRest=(laptop,fnShowMessage)=>{
         console.log("Laptop guardada ", body);
     });
 }
+
+export const updateLaptopRest=(laptop,fnShowMessage)=>{
+    const config={
+        method:"PUT",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            id:laptop.id,
+            marca:laptop.marca,
+            procesador:laptop.procesador,
+            memoria:laptop.memoria,
+            disco:laptop.disco
+        })
+    }
+    fetch(
+        "http://192.168.0.110:3001/laptop/"+laptop.id,config
+    ).then((response)=>{return response.json()})
+    .then((body)=>{
+        fnShowMessage();
+        console.log("Laptop actualizada ", body);
+    });
+}
