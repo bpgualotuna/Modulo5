@@ -7,6 +7,8 @@ import { ContactsForm } from "./screens/ContactsForm";
 
 export default function App() {
   const StackContacts = createNativeStackNavigator();
+
+  
   
   return (
     <NavigationContainer>

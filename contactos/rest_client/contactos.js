@@ -25,7 +25,7 @@ export const saveContactRest=(contact,fnShowMessage)=>{
         body:JSON.stringify({
             nombre:contact.name,
             apellido:contact.surName,
-            telefono:contact.phoneNumber
+            celular:contact.phoneNumber
         })
     }
     fetch(
@@ -47,7 +47,7 @@ export const updateContactRest=(contact,fnShowMessage)=>{
             id:contact.id,
             nombre:contact.name,
             apellido:contact.surName,
-            telefono:contact.phoneNumber
+            celular:contact.phoneNumber
         })
     }
     fetch(

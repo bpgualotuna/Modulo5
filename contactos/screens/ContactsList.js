@@ -1,15 +1,23 @@
 import { View, Text, StyleSheet, FlatList, TouchableHighlight } from "react-native";
 import { Button, ListItem, FAB } from "@rneui/base";
 import { getAllContacts } from "../rest_client/contactos";
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 
 export const ContactsList = ({ navigation }) => {
     const [contactsList, setContactsList] = useState([]);
 
-    useEffect(()=>{
-        console.log("Ejecutando la funcion de useEffect");
-        getAllContacts(fnRefreshList);
-    },[]);
+    const fnRefreshList = (contacts) => {
+        console.log("Refrescando lista de contactos..., ", contacts);
+        setContactsList(contacts);
+    }
+
+    useFocusEffect(
+        useCallback(() => {
+            console.log("Pantalla enfocada, refrescando lista...");
+            getAllContacts(fnRefreshList);
+        }, [])
+    );
 
     const ContactItem = ({ contact }) => {
         return <TouchableHighlight onPress={()=>{
@@ -18,16 +26,13 @@ export const ContactsList = ({ navigation }) => {
             <ListItem>
                 <ListItem.Content>
                     <ListItem.Title>{contact.nombre} {contact.apellido}</ListItem.Title>
-                    <ListItem.Subtitle>{contact.telefono}</ListItem.Subtitle>
+                    <ListItem.Subtitle>{contact.celular}</ListItem.Subtitle>
                 </ListItem.Content>
             </ListItem>
         </TouchableHighlight>
     }
 
-    const fnRefreshList = (contacts) => {
-        console.log("Refrescando lista de contactos..., ", contacts);
-        setContactsList(contacts);
-    }
+    
     return <View style={styles.container}>
         
         <FlatList

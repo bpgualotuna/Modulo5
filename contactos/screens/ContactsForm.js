@@ -14,7 +14,7 @@ export const ContactsForm = ({ navigation, route }) => {
 
     const [name, setName] = useState(isNew ? null : contactRetrived.nombre);
     const [surName, setSurName] = useState(isNew ? null : contactRetrived.apellido);
-    const [phoneNumber, setPhoneNumber] = useState(isNew ? null : contactRetrived.telefono);
+    const [phoneNumber, setPhoneNumber] = useState(isNew ? null : contactRetrived.celular);
 
 
 
@@ -39,7 +39,7 @@ export const ContactsForm = ({ navigation, route }) => {
     const updateContact = () => {
         console.log("Actualizando contacto...")
         updateContactRest({
-            id: contactRetrived.id,
+            id: contactRetrived.id_c,
             name: name,
             surName: surName,
             phoneNumber: phoneNumber
@@ -62,7 +62,7 @@ export const ContactsForm = ({ navigation, route }) => {
 
     const deleteContact =()=>{
         deleteContactRest({
-            id: contactRetrived.id
+            id: contactRetrived.id_c
         }, showMessage);
     }
 
